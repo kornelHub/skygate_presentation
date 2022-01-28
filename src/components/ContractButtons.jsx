@@ -9,12 +9,18 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 // get the smart contract
 const contract = new ethers.Contract(contractAddress, FundMe.abi, signer);
+// Action when event is emitted.
+contract.on("FundsDeposited", (addressOfDepositer, amountDeposited) => {
+    alert("Address " + addressOfDepositer + " deposited " + parseInt(amountDeposited._hex) / 10**18 + " ETH");
+});
+contract.on("FundsWithdrawned", (addressOfWithdrawer, amountWithdrawned) => {
+    alert("Address " + addressOfWithdrawer + " withdrawn " + parseInt(amountWithdrawned._hex) / 10**18 + " ETH");
+});
 
 function ContractButtons() {
     const deposit = async () => {
         const amountToDeposit = document.getElementById("depositAmount").value;
         const deposit_tx = await contract.deposit({value: ethers.utils.parseEther(amountToDeposit)});
-        console.log(deposit_tx);
     };
 
     const checkDepositedAmountByGivenAddress = async () => {
