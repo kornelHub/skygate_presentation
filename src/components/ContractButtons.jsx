@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ethers } from 'ethers';
 import FundMe from '../../artifacts/contracts/FundMe.sol/FundMe.json';
 
-const contractAddress = '0xf0D9b2786a02A3661c7aD9a8089c0dB3347c1De3';
+const contractAddress = '0x5B09Dcc8DA75798620Cbb4Cae975758FeE601947';
 // provider is connection to the Etherum network
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 // get the end user private key

@@ -3,10 +3,8 @@ pragma solidity ^0.8.0;
 
 contract FundMe {
     mapping(address => uint256) private addressToDepositedAmount;
-    event FundsDeposited(address indexed addressOfDepositer, uint256 amountDeposited);
+    event FundsDeposited(address addressOfDepositer, uint256 amountDeposited);
     event FundsWithdrawned(address addressOfWithdrawer, uint256 amountWithdrawned);
-
-    constructor () {}
 
     function deposit() public payable {
         addressToDepositedAmount[msg.sender] += msg.value;
@@ -19,7 +17,8 @@ contract FundMe {
 
     function withdrawn() public {
         uint256 amountToWithdraw = addressToDepositedAmount[msg.sender];
-        payable(msg.sender).transfer(amountToWithdraw);
+        (bool success, ) = msg.sender.call{value:amountToWithdraw}("");
+        require(success, "Transfer failed.");
         addressToDepositedAmount[msg.sender] = 0;
         emit FundsWithdrawned(msg.sender, amountToWithdraw);
     }
