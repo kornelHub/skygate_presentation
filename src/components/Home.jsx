@@ -4,7 +4,7 @@ import ContractButtons from "./ContractButtons";
 
 function Home() {
     return (
-        <div>
+        <div style={{marginLeft: '5%'}}>
             <WalletBalance />
             <ContractButtons />
         </div>
